@@ -2,9 +2,6 @@ import mongoose from 'mongoose'
 
 import config from "./config/config.js";
 import app from "./express.js";
-import dotenv from 'dotenv'
-
-dotenv.config({path:__dirname + '.env'})
 
 
 mongoose.Promise = global.Promise
