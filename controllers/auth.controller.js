@@ -207,6 +207,7 @@ const signout = (req, res) => {
 
 // Permissions
 
+
 const requireSignin = expressJwt({
   secret: process.env.JWT_SECRET,
   userProperty: "auth",

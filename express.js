@@ -27,7 +27,7 @@ import config from './config/config.js'
 const CURRENT_WORKING_DIR = process.cwd();
 const app = express();
 
-dotenv.config({path:__dirname + '.env'})
+dotenv.config()
 
 
 app.use(express.json());
