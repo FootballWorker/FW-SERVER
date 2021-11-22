@@ -75,7 +75,7 @@ const activation = async (req, res) => {
       const newUser = new User(user)
       let ntf = await Notification.create({
         title: "Welcome to FW",
-        text: "Congratulations. You are officially an FW right now! You can work for any team or any newspaper you like, if you are good at commenting on football, of course! We hope that this website helps you to make your dreams in the football realm. We believe, the format of this website uncovers some great football commentators who are love to support their teams or just love football and talk about it and hopefully help them to find a job in that area. As for departments and jobs, it does not matter what you write about, you are completely free for choosing any topic but writing about subjects that belong to your job title helps you get a position in teams or news. Lastly, we would like you to know that this website is kind of slow and some functions like notifications and votes do not work synchronously and you can see some lack of security in login page because of technical and financial deficiency in our firm but we will improve as this website gets popular. Eventually, we recommend you to use a PC other than another device for now. Good luck!",
+        text: "Congratulations. You are officially an FW right now! You can work for any team or any newspaper you like, if you are good at commenting on football, of course! We hope that this website helps you to make your dreams in the football realm. We believe, the format of this website uncovers some great football commentators who are love to support their teams or just love football.  Hopefully, this website and our other jobs in the future help them to find a job in this area. As for departments and jobs, it does not matter what you write about, you are completely free for choosing any topic but writing about subjects that belong to your job title helps you get a position in teams or news. Lastly, we would like you to know that this website is kind of slow and some functions like notifications and votes do not work synchronously and you can meet some tawdriness in design because of technical and financial deficiency in our firm but we promise that we will improve as this website gets popular. Eventually, we recommend you to use a PC other than another device for now because some functions do not appear on mobile platforms. Good luck!",
         from: "Football Worker",
         forWho: newUser._id,
       });
@@ -83,7 +83,15 @@ const activation = async (req, res) => {
       newUser.notifications.push(ntf);
 
 
+      const {favoriteTeam} = user
+      const newUser = new User(user)
+
+      let team = await Team.findById(favoriteTeam)
+
+      team.members.push(newUser._id)
+
       await newUser.save()
+      await team.save()
 
       res.json({message: "Account has been activated!"})
 
