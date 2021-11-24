@@ -18,8 +18,8 @@ import matchRoutes from './routes/match.routes.js'
 import newsRoutes from './routes/news.routes.js'
 import postRoutes from './routes/post.routes.js'
 import commentRoutes from './routes/comment.routes.js'
+import statRoutes from './routes/statistics.routes.js'
 
-import config from './config/config.js'
 
 
 
@@ -54,6 +54,7 @@ app.use("/", pollRoutes);
 app.use("/", attributeRoutes);
 app.use("/", postRoutes);
 app.use("/", commentRoutes);
+app.use("/", statRoutes);
 
 app.get('/',(req,res) => {
   res.send('Hello from server')
