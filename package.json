@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "development":"nodemon server.js",
+    "development": "nodemon server.js",
     "start": "node server.js"
   },
   "dependencies": {
@@ -18,11 +18,14 @@
     "formidable": "^1.2.2",
     "googleapis": "^80.0.0",
     "helmet": "^4.6.0",
+    "hpp": "^0.2.3",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "mongodb": "3.5.5",
     "mongoose": "^5.12.7",
-    "nodemailer": "^6.6.2"
+    "nodemailer": "^6.6.2",
+    "socket.io": "^4.4.0",
+    "toobusy-js": "^0.5.1"
   },
   "devDependencies": {
     "nodemon": "2.0.2"

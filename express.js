@@ -5,6 +5,8 @@ import cookieParser from "cookie-parser";
 import compress from "compression";
 import cors from "cors";
 import helmet from "helmet";
+import hpp from "hpp";
+import toobusy from 'toobusy-js'
 
 import userRoutes from "./routes/user.routes.js";
 import authRoutes from "./routes/auth.routes.js";
@@ -19,6 +21,7 @@ import newsRoutes from './routes/news.routes.js'
 import postRoutes from './routes/post.routes.js'
 import commentRoutes from './routes/comment.routes.js'
 import statRoutes from './routes/statistics.routes.js'
+import chatRoutes from './routes/chat.routes.js'
 
 
 
@@ -39,6 +42,7 @@ app.use(cors({
   credentials:true,
   origin:true,
 }));
+app.use(hpp())
 
 
 // mount routes
@@ -55,11 +59,15 @@ app.use("/", attributeRoutes);
 app.use("/", postRoutes);
 app.use("/", commentRoutes);
 app.use("/", statRoutes);
+app.use("/", chatRoutes);
 
-app.get('/',(req,res) => {
-  res.send('Hello from server')
-})
-
+app.use(function(req, res, next) {
+  if (toobusy()) {
+    res.send(503, "I'm busy right now, sorry.");
+  } else {
+    next();
+  }
+});
 app.use((err, req, res, next) => {
   if (err.name === "UnauthorizedError") {
     res.status(401).json({ error: err.name + ": " + err.message });

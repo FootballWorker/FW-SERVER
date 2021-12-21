@@ -29,11 +29,11 @@ const create = async (req, res) => {
       }
       let comment = new Comment(fields);
 
-      comment.title = req.post.title;
-      comment.commentedBy = req.auth._id;
-      comment.adherence = req.post._id;
-      comment.department = user.department._id;
-      comment.job = user.job._id;
+      comment.title = req.post?.title;
+      comment.commentedBy = req.auth?._id;
+      comment.adherence = req.post?._id;
+      comment.department = user.department?._id;
+      comment.job = user.job?._id;
 
       if (files.imageOne) {
         comment.imageOne.data = fs.readFileSync(files.imageOne.path);

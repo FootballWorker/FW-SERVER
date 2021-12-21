@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 import config from "./config/config.js";
 import app from "./express.js";
-
+import socket from "./controllers/socket.controller.js";
 
 mongoose.Promise = global.Promise
 
@@ -17,7 +17,7 @@ mongoose.connection.on("error", () => {
 
 
 
-app.listen(config.port, (err) => {
+const server = app.listen(config.port, (err) => {
   if (err) {
     console.log(err);
   }
@@ -25,3 +25,4 @@ app.listen(config.port, (err) => {
 });
 
 
+socket(server)

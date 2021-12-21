@@ -4,6 +4,7 @@ import authCtrl from "../controllers/auth.controller.js";
 import playerCtrl from "../controllers/player.controller.js";
 import teamCtrl from "../controllers/team.controller.js";
 
+
 const router = express.Router();
 
 
@@ -38,7 +39,7 @@ router
   .route("/api/new/player/to/:teamId")
   .post(
     authCtrl.requireSignin, 
-    playerCtrl.isPresident,
+    authCtrl.isPresident,
     playerCtrl.create
   );
 

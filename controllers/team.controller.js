@@ -38,7 +38,7 @@ const teamByID = async (req,res,next,id) => {
 
     if (!team)
       return res.status('400').json({
-        error: "User not found"
+        error: "Team not found"
       })
     req.team = team
     next()
@@ -133,6 +133,18 @@ const listForSearch = async (req,res) => {
     })
   }
 }
+
+const listByLiked = async (req,res) => {
+  try {
+    let teams = await Team.find({stars: { $elemMatch: { $eq: req.auth._id } }}).select("_id name starLength").exec()
+    res.json(teams)
+  } catch (error) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(error)
+    })
+  }
+}
+
 
 
 // -------------------------------- HIRING AND FIRING SYSTEM -------------------------------
@@ -392,6 +404,7 @@ export default {
   listByStar,
   listCountries,
   listForSearch,
+  listByLiked,
   makePresident,
   appointedAsPresident,
   makeVicePresident,

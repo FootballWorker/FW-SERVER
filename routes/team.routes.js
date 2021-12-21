@@ -31,6 +31,8 @@ router.route("/api/searching/for/teams")
 router.route('/api/teams/by/stars')
   .get(teamCtrl.listByStar)
 
+router.route('/api/liked/teams/by/:userId')
+  .get(authCtrl.requireSignin,teamCtrl.listByLiked)
 
 // Read , Update and Delete Team APIs
 

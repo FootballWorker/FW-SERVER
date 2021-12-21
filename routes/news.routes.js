@@ -22,7 +22,7 @@ router
 router.route("/api/news/:newsId")
   .get(authCtrl.requireSignin, newsCtrl.incrementViews, newsCtrl.read)
   .put(authCtrl.requireSignin, newsCtrl.isEditor , newsCtrl.update)
-  .delete(authCtrl.requireSignin,newsCtrl.isEditor ,newsCtrl.remove)
+  .delete(authCtrl.requireSignin,authCtrl.isAdmin ,newsCtrl.remove)
 
 
 

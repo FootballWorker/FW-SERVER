@@ -65,7 +65,22 @@ router.route("/api/audience/match")
 router
   .route("/api/disaudience/match")
   .put(authCtrl.requireSignin, matchCtrl.disaudience);
+
   
+  
+// Stats API
+
+router.route("/api/prediction/home")
+  .put(authCtrl.requireSignin,matchCtrl.predictHome)
+
+router.route("/api/prediction/draw")
+  .put(authCtrl.requireSignin,matchCtrl.predictDraw)
+
+router.route("/api/prediction/away")
+  .put(authCtrl.requireSignin,matchCtrl.predictAway)
+
+
+
 // Params
 
 router.param("matchId",matchCtrl.matchByID)

@@ -23,6 +23,14 @@ router.route('/api/activation/:activationToken')
 router.route("/api/users/photo/:userId")
   .get(userCtrl.photo);
 
+router.route("/api/users/background/:userId")
+  .get(userCtrl.background);
+
+// Change Background Image
+router.route("/api/background/:userId")
+  .put(authCtrl.requireSignin,authCtrl.hasAuthorization,userCtrl.updateBackground)
+
+
 
 router.route("/api/searchusers").get(userCtrl.searchUsers);
 

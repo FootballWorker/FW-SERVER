@@ -80,7 +80,7 @@ const activation = async (req, res) => {
       
       let ntf = await Notification.create({
         title: "Welcome to FW",
-        text: "Congratulations. You are officially an FW right now! You can work for any team or any newspaper you like, if you are good at commenting on football, of course! We hope that this website helps you to make your dreams in the football realm. We believe, the format of this website uncovers some great football commentators who are love to support their teams or just love football.  Hopefully, this website and our other jobs in the future help them to find a job in this area. As for departments and jobs, it does not matter what you write about, you are completely free for choosing any topic but writing about subjects that belong to your job title helps you get a position in teams or news. Lastly, we would like you to know that this website is kind of slow and some functions like notifications and votes do not work synchronously and you can meet some tawdriness in design because of technical and financial deficiency in our firm but we promise that we will improve as this website gets popular. Eventually, we recommend you to use a PC other than another device for now because some functions do not appear on mobile platforms. Good luck!",
+        text: "Congratulations. You are officially an FW right now! You can work for any team or any newspaper you like if you are good at observing and commenting on football! We hope that this website helps you to make your dreams in the football realm. We believe, the format of this website will uncover some great football commentators who love football.  Hopefully, this website and our other events in the future help you to find a job in this area. To give an example, We dream to attempt founding some  Football Clubs whose employees consist of FW's, in many countries.   As for departments and jobs, it does not matter what you write, you are completely free for choosing any topic but writing about subjects that belong to your job title helps you more to get a position in teams or news. Lastly, we would like you to know that this website is kind of slow and some functions like notifications and votes do not work synchronously and you can meet some tawdriness in design because of technical and financial deficiency in our firm. However, we promise we will improve it as it gets popular. Eventually, we recommend you to use a PC than another device until we serve up our mobile application because some functions will not appear on mobile platforms. Good luck!",
         from: "Football Worker",
         forWho: newUser._id,
       });
@@ -93,7 +93,7 @@ const activation = async (req, res) => {
       res.json({message: "Account has been activated!"})
 
   } catch (err) {
-      return res.status(500).json({error: "Something went wrong! Most likely its because your activation time has ended but this would be a cyber attack or there could be some errors in our servers! Please try again. If you could not make it, just contact us."})
+      return res.status(500).json({error: "Something went wrong! Most likely it's because your activation time has ended. However, the reason for this might be a cyber attack or there could be some errors in our servers! Try to sign in, please. If you cannot make it, contact us."})
   }
 }
 
@@ -107,8 +107,8 @@ const userByID = async (req, res, next, id) => {
       .populate("favoriteTeam", "_id name")
       .populate("team", "_id name")
       .populate("news", "_id title")
-      .populate("following", "_id name")
-      .populate("followers", "_id name")
+      .populate("following", "_id name photo")
+      .populate("followers", "_id name photo")
       .exec();
     if (!user)
       return res.status("400").json({
@@ -197,6 +197,37 @@ const update = (req, res) => {
   });
 };
 
+// Change Background Photo
+const updateBackground = (req,res) => {
+  let form = new formidable.IncomingForm();
+  form.keepExtensions = true;
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      return res.status(400).json({
+        error: "Photo could not be uploaded",
+      });
+    }
+    let user = req.profile;
+    user.updated = Date.now();
+
+    if (files.background) {
+      user.background.data = fs.readFileSync(files.background.path);
+      user.background.contentType = files.background.type;
+    }
+
+    try {
+      await user.save();
+      user.hashed_password = undefined;
+      user.salt = undefined;
+      res.json(user);
+    } catch (error) {
+      return res
+        .status(400)
+        .json({ error: errorHandler.getErrorMessage(error) });
+    }
+  });
+}
+
 const changeFavorite = async (req, res) => {
   try {
     let result = await User.findByIdAndUpdate(
@@ -246,6 +277,14 @@ const photo = (req, res, next) => {
   if (req.profile.photo.data) {
     res.set("Content-Type", req.profile.photo.contentType);
     return res.send(req.profile.photo.data);
+  }
+  next();
+};
+
+const background = (req, res, next) => {
+  if (req.profile.background.data) {
+    res.set("Content-Type", req.profile.background.contentType);
+    return res.send(req.profile.background.data);
   }
   next();
 };
@@ -520,9 +559,11 @@ export default {
   searchUsers,
   read,
   update,
+  updateBackground,
   changeFavorite,
   remove,
   photo,
+  background,
   applicants,
   newsApplicants,
   addFollowing,

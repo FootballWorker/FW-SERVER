@@ -162,17 +162,6 @@ const resetPassword = (req, res) => {
       error: "Token",
     });
   }
-  // const {password} = req.body
-  // if(!password){
-  //   return res.status(404).json({
-  //     error: "Password not found!"
-  //   })
-  // }
-  // if(password.length < 6){
-  //   return res.status(404).json({
-  //     error: "Password 6 must be!"
-  //   })
-  // }
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
   form.parse(req, async (err, fields, files) => {
@@ -244,24 +233,23 @@ const isAdmin = async (req, res, next) => {
 };
 
 const isPresident = async (req, res, next) => {
+  const teamId = req.body.teamId ? req.body.teamId : req.team?._id
   try {
-    const team = await Team.findById(req.body.teamId)
-      .populate("president", "_id name")
-      .exec();
-
-    if (!team) {
-      return res.status(404).json({
-        error: "No team Found!",
-      });
-    }
-
-    if (req.auth._id != team.president._id) {
-      return res.status(500).json({
-        error: "Not Allowed! You must be President of this team first!",
-      });
-    }
-
-    next();
+      const team = await Team.findById(teamId).populate("president","_id name").exec()
+  
+      if(!team){
+        return res.status(404).json({
+          error: "No team Found!"
+        })
+      }
+  
+      if (req.auth._id != team.president?._id) {
+        return res.status(500).json({
+          error: "Not Allowed! You must be President of this team first!",
+        });
+      }
+  
+      next();
   } catch (error) {
     return res.status(500).json({
       error: errorHandler.getErrorMessage(error),
@@ -281,7 +269,7 @@ const isManager = async (req, res, next) => {
       });
     }
 
-    if (req.auth._id != team.manager._id) {
+    if (req.auth?._id != team.manager?._id) {
       return res.status(500).json({
         error: "Not Allowed! You must be Manager of this team first!",
       });

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 import Post from "./../models/post.model.js";
+import Player from "./../models/player.model.js";
 import Comment from "./../models/comment.model.js";
 import User from "./../models/user.model.js";
 
@@ -116,9 +117,38 @@ const totalLikeNews = async (req, res) => {
   }
 };
 
+const totalValue = async (req,res) => {
+  try {
+    await Player.aggregate([
+      {
+        $match: {team: req.team._id}
+      },
+      {
+        $group: {
+          _id: null,
+          sumValue: {
+            $sum: "$value",
+          },
+        },
+      },
+      { $unset: ["_id"] },
+    ], function(err, result) {
+      if(err){
+        console.log(err)
+      }else{
+        res.json(result[0])
+      }})
+  } catch (error) {
+    return res.status(400).json({
+      error: "Not Found",
+    });
+  }
+}
+
 export default {
   totalLikeUser,
   totalCommentLikes,
   totalLikeNews,
-  totalFollowerSubscribe
+  totalFollowerSubscribe,
+  totalValue
 };

@@ -731,7 +731,7 @@ const isEditor = async (req,res,next) => {
     let user = await User.findById(req.post.postedBy).populate('news').exec()
     let news = await News.findOne({'creator' : req.auth._id})
 
-    if(req.post.news.creator != req.auth._id){
+    if(req.post.news?.creator != req.auth._id){
       return res.status(400).json({
         error:
           "You are not allowed to carry out this operation! User does not work at your News!",
@@ -744,7 +744,7 @@ const isEditor = async (req,res,next) => {
       })
     }
 
-    if(user.news._id != news._id){
+    if(user.news?._id != news._id){
       return res.status(401).json({
         error: "You are not allowed to carry out this operation! User does not work at your News!"
       })
@@ -760,7 +760,7 @@ const isEditor = async (req,res,next) => {
 
 // Work on it more
 const isJournalWorker = (req,res,next) => {
-  const isApproval = req.auth && req.news && req.news.employees.indexOf(req.auth._id) != -1
+  const isApproval = req.auth && req.news && req.news?.employees?.indexOf(req.auth._id) != -1
   if(!isApproval){
     return res.status(401).json({
       error: "You are not allowed to write in this News!"

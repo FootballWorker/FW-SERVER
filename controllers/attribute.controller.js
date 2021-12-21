@@ -16,6 +16,13 @@ import errorHandler from "./../helpers/dbErrorHandler.js";
 
 const create = async (req,res) => {
   try {
+    // Check if user pointed already
+    let isPointed = await Attribute.findOne({recordedBy: req.auth._id , category: req.body.category,player:req.player._id})
+    if(isPointed){
+      return res.status("400").json({
+        error: "Hey You already gave points for this category! However, you can edit it."
+      })
+    }
     const attribute = new Attribute(req.body)
 
     attribute.recordedBy = req.auth._id
@@ -51,6 +58,10 @@ const attributeByID = async (req, res, next, id) => {
   }
 };
 
+const read = (req,res) => {
+  res.json(req.attribute)
+}
+
 const averageAttributes = async (req,res) => {
   try {
     let averageAttr = await Attribute.aggregate([
@@ -73,6 +84,32 @@ const list = async (req,res) => {
   try {
     let attributes = await Attribute.find({player:req.player._id}).populate("recordedBy","_id name").populate("player","_id name").exec()
     res.json(attributes)
+  } catch (error) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+}
+
+const listByUser = async (req,res) => {
+  try {
+    let users = await Attribute.find({player:req.player._id,recordedBy:req.auth._id }).populate("recordedBy","_id name").exec()
+    res.status(200).json(users)
+  } catch (error) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+}
+
+const update = async (req,res) => {
+  try {
+    let result = await Attribute.findByIdAndUpdate(
+      req.body.attributeId,
+      {point : req.body.point},
+      {new: true}
+    ).populate("recordedBy","_id name").populate("player","_id name").exec()
+    res.json(result)
   } catch (error) {
     return res.status(400).json({
       error: errorHandler.getErrorMessage(err),
@@ -114,6 +151,17 @@ const isTechnic = async (req, res, next) => {
   }
 };
 
+const isRecorded = async (req,res,next) => {
+  const authorized = req.body?.recordedBy === req.auth?._id
+  if (!(authorized)) {    
+    return res.status('403').json({      
+      error: "User is not authorized!"    
+    })}  
+
+  next()
+}
+
+
 
 
 
@@ -122,8 +170,12 @@ const isTechnic = async (req, res, next) => {
 export default {
   create,
   attributeByID,
+  read,
   averageAttributes,
   list,
+  listByUser,
+  update,
   remove,
-  isTechnic
+  isTechnic,
+  isRecorded
 }
