@@ -3,17 +3,17 @@ import { Server } from "socket.io";
 import Chat from "./../models/chat.model.js";
 
 export default (server) => {
-  const io = new Server(server, { cors: "ws://localhost:3000" });
+  const io = new Server(server, { cors: process.env.CLIENTURI });
 
   io.on("connection", function (socket) {
     socket.on("join chat room", (data) => {
       socket.join(data.room);
     });
-    socket.on("leave chat room", (data) => {
-      socket.leave(data.room);
-    });
     socket.on("new message", (data) => {
       backFunc(data.messageInfo, data.room);
+    });
+    socket.on("leave chat room", (data) => {
+      socket.leave(data.room);
     });
   });
   const backFunc = async (message, chat) => {

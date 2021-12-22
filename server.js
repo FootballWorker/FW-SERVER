@@ -1,10 +1,9 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
-import config from "./config/config.js";
 import app from "./express.js";
 import socket from "./controllers/socket.controller.js";
 
-mongoose.Promise = global.Promise
+mongoose.Promise = global.Promise;
 
 mongoose.connect(process.env.MONGODB_LINK, {
   useNewUrlParser: true,
@@ -15,14 +14,11 @@ mongoose.connection.on("error", () => {
   throw new Error(`unable to connect to database: ${process.env.MONGODB_LINK}`);
 });
 
-
-
-const server = app.listen(config.port, (err) => {
+const server = app.listen(process.env.PORT, (err) => {
   if (err) {
     console.log(err);
   }
-  console.info("Server started on port %s.", config.port);
+  console.info("Server started on port %s.", process.env.PORT);
 });
 
-
-socket(server)
+socket(server);
