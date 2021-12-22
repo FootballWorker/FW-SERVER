@@ -3,7 +3,9 @@ import { Server } from "socket.io";
 import Chat from "./../models/chat.model.js";
 
 export default (server) => {
-  const io = new Server(server);
+  const io = new Server(server,{cors: {
+    origin: "https://footballworker.net",
+  }});
 
   io.on("connection", function (socket) {
     socket.on("join chat room", (data) => {
