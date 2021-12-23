@@ -1,4 +1,3 @@
-import http from 'http';
 import mongoose from "mongoose";
 import app from "./express.js";
 
@@ -15,14 +14,11 @@ mongoose.connection.on("error", () => {
   throw new Error(`unable to connect to database: ${process.env.MONGODB_LINK}`);
 });
 
-// const server = app.listen(process.env.PORT, (err) => {
-//   if (err) {
-//     console.log(err);
-//   }
-//   console.info("Server started on port %s.", process.env.PORT);
-// });
-const server = http.createServer(app);
+const server = app.listen(process.env.PORT, (err) => {
+  if (err) {
+    console.log(err);
+  }
+  console.info("Server started on port %s.", process.env.PORT);
+});
 
 socket(server);
-
-server.listen(process.env.PORT , () => console.log(`Server has started.`));
