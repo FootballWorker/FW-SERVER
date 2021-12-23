@@ -3,10 +3,7 @@ import { Server } from "socket.io";
 import Chat from "./../models/chat.model.js";
 
 export default (server) => {
-  const io = new Server(server,{cors: {
-    origin: process.env.CLIENTURI,
-    methods: ["GET", "POST" , "PUT"]
-  }});
+  const io = new Server(server,{cors: process.env.CLIENTURI});
 
   io.on("connection", function (socket) {
     socket.on("join chat room", (data) => {
@@ -28,7 +25,7 @@ export default (server) => {
       )
         .populate("users","_id name photo")
         .populate("messages.sender", "_id name")
-      io.to(chat).emit("new message", result.messages.at(-1));
+      io.to(chat).emit("new message", result.messages?.at(-1));
     } catch (err) {
       console.log(err);
     }
