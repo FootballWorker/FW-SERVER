@@ -7,7 +7,6 @@ export default (server) => {
     cors: {
       origin: process.env.CLIENTURI,
       methods: ["GET", "POST"],
-      allowedHeaders: ["my-custom-header"],
       credentials: true,
     },
   });
