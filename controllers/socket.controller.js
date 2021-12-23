@@ -3,7 +3,13 @@ import { Server } from "socket.io";
 import Chat from "./../models/chat.model.js";
 
 export default (server) => {
-  const io = new Server(server,{cors: process.env.CLIENTURI});
+  const io = new Server(server, {
+    cors: {
+      origin: process.env.CLIENTURI,
+      methods: ["GET", "POST" , "PUT"],
+      credentials: true,
+    },
+  });
 
   io.on("connection", function (socket) {
     socket.on("join chat room", (data) => {
@@ -20,15 +26,17 @@ export default (server) => {
     try {
       let result = await Chat.findOneAndUpdate(
         { _id: chat },
-        { $push: { messages: message },$pull : {readBy : {$nin : message?.sender}} },
+        {
+          $push: { messages: message },
+          $pull: { readBy: { $nin: message?.sender } },
+        },
         { new: true }
       )
-        .populate("users","_id name photo")
-        .populate("messages.sender", "_id name")
+        .populate("users", "_id name photo")
+        .populate("messages.sender", "_id name");
       io.to(chat).emit("new message", result.messages?.at(-1));
     } catch (err) {
       console.log(err);
     }
   };
-  
 };
