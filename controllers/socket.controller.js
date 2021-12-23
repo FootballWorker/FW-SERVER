@@ -7,7 +7,6 @@ export default (server) => {
     cors: {
       origin: process.env.CLIENTURI,
       methods: ["GET", "POST" , "PUT"],
-      credentials: true,
     },
   });
 
@@ -33,7 +32,8 @@ export default (server) => {
         { new: true }
       )
         .populate("users", "_id name photo")
-        .populate("messages.sender", "_id name");
+        .populate("messages.sender", "_id name")
+        .exec()
       io.to(chat).emit("new message", result.messages?.at(-1));
     } catch (err) {
       console.log(err);
