@@ -4,7 +4,11 @@ import Chat from "./../models/chat.model.js";
 
 export default (server) => {
   const io = new Server(server, {
-    cors: process.env.CLIENTURI,
+    cors: {
+      origin: process.env.CLIENTURI,
+      methods: ["GET", "POST","PUT"],
+      credentials: true
+    }
   });
 
   io.on("connection", function (socket) {
