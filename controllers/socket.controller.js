@@ -23,7 +23,6 @@ export default (server) => {
     });
   });
   const backFunc = async (message, chat) => {
-    console.log(chat)
     try {
       let result = await Chat.findOneAndUpdate(
         { _id: chat },
@@ -36,8 +35,7 @@ export default (server) => {
         .populate("users", "_id name photo")
         .populate("messages.sender", "_id name")
         .exec();
-      console.log(result?.messages?.at(-1))
-      io.to(chat).emit("new message", result?.messages?.at(-1));
+      io.to(chat).emit("new message", result);
     } catch (err) {
       console.log(err);
     }
