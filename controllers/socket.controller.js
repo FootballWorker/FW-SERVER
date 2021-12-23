@@ -15,11 +15,11 @@ export default (server) => {
     socket.on("join chat room", (data) => {
       socket.join(data.room);
     });
-    socket.on("new message", (data) => {
-      backFunc(data.messageInfo, data.room);
-    });
     socket.on("leave chat room", (data) => {
       socket.leave(data.room);
+    });
+    socket.on("new message", (data) => {
+      backFunc(data.messageInfo, data.room);
     });
   });
   const backFunc = async (message, chat) => {
@@ -35,7 +35,7 @@ export default (server) => {
         .populate("users", "_id name photo")
         .populate("messages.sender", "_id name")
         .exec();
-      io.to(chat).emit("new message", result.messages?.at(-1));
+      io.to(chat).emit("new message", result?.messages?.at(-1));
     } catch (err) {
       console.log(err);
     }
