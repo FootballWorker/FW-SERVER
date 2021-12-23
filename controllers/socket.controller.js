@@ -3,7 +3,7 @@ import { Server } from "socket.io";
 import Chat from "./../models/chat.model.js";
 
 export default (server) => {
-  const io = new Server(server,{cors: process.env.CLIENTURI});
+  const io = new Server(server,{cors: process.env.CLIENTURI,pingTimeout: 60000});
 
   io.on("connection", function (socket) {
     socket.on("join chat room", (data) => {
