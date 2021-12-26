@@ -13,37 +13,37 @@ const router = express.Router()
 
 
 
-router.route("/api/users").get(userCtrl.list).post(userCtrl.create);
+router.route("/users").get(userCtrl.list).post(userCtrl.create);
 
   
-router.route('/api/activation/:activationToken')
+router.route('/activation/:activationToken')
   .post(userCtrl.activation)
 
 
-router.route("/api/users/photo/:userId")
+router.route("/users/photo/:userId")
   .get(userCtrl.photo);
 
-router.route("/api/users/background/:userId")
+router.route("/users/background/:userId")
   .get(userCtrl.background);
 
 // Change Background Image
-router.route("/api/background/:userId")
+router.route("/background/:userId")
   .put(authCtrl.requireSignin,authCtrl.hasAuthorization,userCtrl.updateBackground)
 
 
 
-router.route("/api/searchusers").get(userCtrl.searchUsers);
+router.route("/searchusers").get(userCtrl.searchUsers);
 
-router.route("/api/applicants/by/:teamId")
+router.route("/applicants/by/:teamId")
   .get(userCtrl.applicants)
 
-router.route("/api/newsapplications/by/:newsId")
+router.route("/newsapplications/by/:newsId")
   .get(userCtrl.newsApplicants)
 
 // ------- FOLLOWING SYSTEM ---------
 
 // Route For Following
-router.route('/api/following/user')  
+router.route('/following/user')  
   .put(
     authCtrl.requireSignin,
     userCtrl.addFollowing,  
@@ -51,20 +51,20 @@ router.route('/api/following/user')
     )
 
 // Route For Unfollowing
-router.route('/api/unfollowing/user')
+router.route('/unfollowing/user')
   .put(
     authCtrl.requireSignin,
     userCtrl.removeFollowing,
     userCtrl.removeFollower
     )
 
-router.route("/api/followers/by/:userId")
+router.route("/followers/by/:userId")
   .get(
     authCtrl.requireSignin,
     userCtrl.followerLength
   )
 
-router.route("/api/followings/by/:userId")
+router.route("/followings/by/:userId")
   .get(
     authCtrl.requireSignin,
     userCtrl.followingsLength
@@ -74,12 +74,12 @@ router.route("/api/followings/by/:userId")
 //  --------------- CRUD -------------------
   
 router
-  .route('/api/users/:userId')
+  .route('/users/:userId')
   .get(authCtrl.requireSignin,userCtrl.incrementViews , userCtrl.read)
   .put(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.update)
   .delete(authCtrl.requireSignin, authCtrl.hasAuthorization , userCtrl.remove)
 
-router.route("/api/changeFavorite")
+router.route("/changeFavorite")
   .put(
     authCtrl.requireSignin,
     userCtrl.changeFavorite
@@ -88,13 +88,13 @@ router.route("/api/changeFavorite")
 // ------------------------------- NOTIFICATIONS ---------------------------------
 
 
-router.route("/api/newntf/:userId")
+router.route("/newntf/:userId")
   .post(
     authCtrl.requireSignin,
     userCtrl.ntfFromSite
   )
 
-router.route('/api/notifications/by/:userId')
+router.route('/notifications/by/:userId')
   .get(
     authCtrl.requireSignin,
     authCtrl.hasAuthorization,
@@ -102,14 +102,14 @@ router.route('/api/notifications/by/:userId')
   )
 
 
-router.route("/api/unread/notifications")
+router.route("/unread/notifications")
   .get(
     authCtrl.requireSignin,
     userCtrl.unReadList
   )
 
 
-router.route("/api/notifications/:notificationId")
+router.route("/notifications/:notificationId")
   .get(
     authCtrl.requireSignin,
     userCtrl.changeStatus,
@@ -120,7 +120,7 @@ router.route("/api/notifications/:notificationId")
     userCtrl.removeNtf
   )
 
-router.route("/api/remove/notifications")
+router.route("/remove/notifications")
   .delete(
     authCtrl.requireSignin,
     userCtrl.removeAll

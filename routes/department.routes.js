@@ -8,12 +8,12 @@ const router = express.Router()
 
 
 router
-  .route("/api/departments")
+  .route("/departments")
   .post(authCtrl.requireSignin, authCtrl.isAdmin, departmentCtrl.create)
   .get( departmentCtrl.list);
 
 router
-  .route("/api/departments/:departmentId")
+  .route("/departments/:departmentId")
   .get(departmentCtrl.incrementViews,departmentCtrl.read)
   .put(authCtrl.requireSignin, authCtrl.isAdmin, departmentCtrl.update)
   .delete(authCtrl.requireSignin, authCtrl.isAdmin, departmentCtrl.remove)

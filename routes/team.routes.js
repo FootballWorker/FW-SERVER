@@ -12,32 +12,32 @@ const router = express.Router();
 // Create Team
 
 router
-  .route("/api/new/team")
+  .route("/new/team")
   .post(authCtrl.requireSignin, authCtrl.isAdmin, teamCtrl.create);
 
 
 // Listing Teams 
 
 router
-  .route('/api/teams')
+  .route('/teams')
   .get(teamCtrl.list)
 
-router.route("/api/teams/countries")
+router.route("/teams/countries")
   .get(teamCtrl.listCountries)
 
-router.route("/api/searching/for/teams")
+router.route("/searching/for/teams")
   .get(teamCtrl.listForSearch)
 
-router.route('/api/teams/by/stars')
+router.route('/teams/by/stars')
   .get(teamCtrl.listByStar)
 
-router.route('/api/liked/teams/by/:userId')
+router.route('/liked/teams/by/:userId')
   .get(authCtrl.requireSignin,teamCtrl.listByLiked)
 
 // Read , Update and Delete Team APIs
 
 router
-  .route("/api/teams/:teamId")
+  .route("/teams/:teamId")
   .get(teamCtrl.incrementViews , teamCtrl.read)
   .put(authCtrl.requireSignin, authCtrl.isAdmin , teamCtrl.update)
   .delete(authCtrl.requireSignin, authCtrl.isAdmin, teamCtrl.remove);
@@ -47,23 +47,23 @@ router
 // Application
 
 router
-  .route("/api/apply/for/team")
+  .route("/apply/for/team")
   .put(authCtrl.requireSignin , teamCtrl.apply);
 
 router
-  .route("/api/cancel/apply/team")
+  .route("/cancel/apply/team")
   .put(authCtrl.requireSignin, teamCtrl.cancelApply);
 
 // Becoming Candidates
 
-router.route("/api/run/election")
+router.route("/run/election")
   .put(
     authCtrl.requireSignin,
     teamCtrl.isPresident,
     teamCtrl.runForElection
   )
 
-router.route("/api/cancel/run/election")
+router.route("/cancel/run/election")
   .put(
     authCtrl.requireSignin,
     teamCtrl.isPresident,
@@ -74,7 +74,7 @@ router.route("/api/cancel/run/election")
 // -------- HIRE SYSTEM ---------------
 
 router
-  .route("/api/hire/as/president")
+  .route("/hire/as/president")
   .put(
     authCtrl.requireSignin, 
     authCtrl.isAdmin,
@@ -83,7 +83,7 @@ router
   );
 
 router
-  .route("/api/hire/as/vicePresident")
+  .route("/hire/as/vicePresident")
   .put(
     authCtrl.requireSignin,
     authCtrl.isPresident,
@@ -92,7 +92,7 @@ router
   );
 
 router
-  .route("/api/hire/as/manager")
+  .route("/hire/as/manager")
   .put(
     authCtrl.requireSignin,
     authCtrl.isPresident,
@@ -101,7 +101,7 @@ router
   );
 
 router
-  .route("/api/hire/as/coach")
+  .route("/hire/as/coach")
   .put(
     authCtrl.requireSignin,
     authCtrl.isManager,
@@ -111,7 +111,7 @@ router
 
 
 router
-  .route("/api/hire/as/youth")
+  .route("/hire/as/youth")
   .put(
     authCtrl.requireSignin,
     authCtrl.isManager,
@@ -121,7 +121,7 @@ router
 
 
 router
-  .route("/api/hire/as/scout")
+  .route("/hire/as/scout")
   .put(
     authCtrl.requireSignin,
     authCtrl.isManager,
@@ -134,7 +134,7 @@ router
 // ------------------ FIRE SYSTEM ---------------
 
 router
-  .route("/api/fire/from/president")
+  .route("/fire/from/president")
   .put(
     authCtrl.requireSignin,
     teamCtrl.firePresident,
@@ -142,7 +142,7 @@ router
   );
 
 router
-  .route("/api/fire/from/vicePresident")
+  .route("/fire/from/vicePresident")
   .put(
     authCtrl.requireSignin,
     teamCtrl.fireVicePresident,
@@ -150,7 +150,7 @@ router
   );
 
 router
-  .route("/api/firemanager")
+  .route("/firemanager")
   .put(
     authCtrl.requireSignin,
     teamCtrl.fireManager,
@@ -158,7 +158,7 @@ router
   );
 
 router
-  .route("/api/fire/from/coach")
+  .route("/fire/from/coach")
   .put(
     authCtrl.requireSignin,
     teamCtrl.fireCoach,
@@ -166,7 +166,7 @@ router
   );
 
 router
-  .route("/api/fire/from/youth")
+  .route("/fire/from/youth")
   .put(
     authCtrl.requireSignin,
     teamCtrl.fireYouth,
@@ -174,7 +174,7 @@ router
   );
 
 router
-  .route("/api/fire/from/scout")
+  .route("/fire/from/scout")
   .put(
     authCtrl.requireSignin,
     teamCtrl.fireScout,
@@ -187,9 +187,9 @@ router
 
 // Star Players APIs
 
-router.route("/api/staring/team").put(authCtrl.requireSignin, teamCtrl.star);
+router.route("/staring/team").put(authCtrl.requireSignin, teamCtrl.star);
 
-router.route("/api/unstaring/team").put(authCtrl.requireSignin, teamCtrl.unstar);
+router.route("/unstaring/team").put(authCtrl.requireSignin, teamCtrl.unstar);
 
 
 

@@ -9,7 +9,7 @@ import pollCtrl from './../controllers/poll.controller.js'
 const router = express.Router()
 
 
-router.route("/api/polls/for/:teamId")
+router.route("/polls/for/:teamId")
   .post(
     authCtrl.requireSignin,
     pollCtrl.create
@@ -19,7 +19,7 @@ router.route("/api/polls/for/:teamId")
   )
   
 router
-  .route("/api/polls/vote/for")
+  .route("/polls/vote/for")
   .post(
     authCtrl.requireSignin,
     pollCtrl.isMember, 
@@ -27,12 +27,12 @@ router
   );
       
 
-router.route("/api/polls")
+router.route("/polls")
   .get(pollCtrl.listOpen)
 
 
 router
-  .route("/api/polls/:pollId")
+  .route("/polls/:pollId")
   .get(authCtrl.requireSignin,pollCtrl.read)
   .delete(
     authCtrl.requireSignin,

@@ -10,7 +10,7 @@ const router = express.Router();
 
 
 
-router.route("/api/jobs/by/:departmentId")
+router.route("/jobs/by/:departmentId")
   .post(
     authCtrl.requireSignin, 
     authCtrl.isAdmin, 
@@ -20,23 +20,23 @@ router.route("/api/jobs/by/:departmentId")
     jobCtrl.listByDepartment
   )
 
-router.route("/api/jobs")
+router.route("/jobs")
   .get(jobCtrl.list)
 
-router.route("/api/vacant/jobs/:jobId")
+router.route("/vacant/jobs/:jobId")
   .get(
     authCtrl.requireSignin,
     jobCtrl.listVacantJobs
   )
 
-router.route("/api/best/workers/by/:jobId")
+router.route("/best/workers/by/:jobId")
   .get(
     authCtrl.requireSignin,
     jobCtrl.bestWorkers
   )
 
 router
-  .route("/api/jobs/:jobId")
+  .route("/jobs/:jobId")
   .get(authCtrl.requireSignin, jobCtrl.read)
   .put(authCtrl.requireSignin, authCtrl.isAdmin, jobCtrl.update)
   .delete(authCtrl.requireSignin, authCtrl.isAdmin, jobCtrl.remove);

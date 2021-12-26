@@ -17,22 +17,22 @@ const router = express.Router()
 // ------------------ CREATE POSTS ----------------
 
 router
-  .route("/api/posts/by/:teamId")
+  .route("/posts/by/:teamId")
   .post(authCtrl.requireSignin, postCtrl.createForTeam)
   .get(authCtrl.requireSignin , postCtrl.listByTeam);
 
 router
-  .route('/api/playerposts/by/:playerId')
+  .route('/playerposts/by/:playerId')
   .post(authCtrl.requireSignin,postCtrl.createForPlayer)
   .get(postCtrl.listByPlayer)
 
 router
-  .route("/api/matchposts/by/:matchId")
+  .route("/matchposts/by/:matchId")
   .post(authCtrl.requireSignin, postCtrl.createForMatch)
   .get(postCtrl.listByMatch);
   
 router
-  .route("/api/newsposts/by/:newsId")
+  .route("/newsposts/by/:newsId")
   .post(authCtrl.requireSignin,postCtrl.createForNews)
   .get(postCtrl.listByNews)
 
@@ -40,7 +40,7 @@ router
 
 // Photo URL
 
-router.route("/api/posts/imageOne/:postId").get(postCtrl.imageOne);
+router.route("/posts/imageOne/:postId").get(postCtrl.imageOne);
 
 
 
@@ -48,7 +48,7 @@ router.route("/api/posts/imageOne/:postId").get(postCtrl.imageOne);
 // Read and Delete Post
 
 router
-  .route("/api/posts/:postId")
+  .route("/posts/:postId")
   .get(postCtrl.incrementViews,postCtrl.read)
   .delete(authCtrl.requireSignin, postCtrl.isPoster, postCtrl.remove);
 
@@ -60,21 +60,21 @@ router
 
 
 
-router.route('/api/whole/posts/for/:userId')
+router.route('/whole/posts/for/:userId')
   .get(authCtrl.requireSignin ,postCtrl.listByUser)
 
-router.route('/api/departmentposts/by/:departmentId')
+router.route('/departmentposts/by/:departmentId')
   .get(postCtrl.listByDepartment)
 
-router.route('/api/jobposts/by/:jobId')
+router.route('/jobposts/by/:jobId')
   .get(authCtrl.requireSignin,postCtrl.listByJob)
 
-router.route('/api/followingposts/feed/:userId')
+router.route('/followingposts/feed/:userId')
   .get(
     postCtrl.listByFollowings
   )
   
-router.route('/api/posts/pinned/:newsId')
+router.route('/posts/pinned/:newsId')
   .get(
     authCtrl.requireSignin,
     postCtrl.pinnedPosts
@@ -83,41 +83,41 @@ router.route('/api/posts/pinned/:newsId')
 
 // --------------  LIST FOR BESTIES AND ASIDE -----------------------
 
-router.route('/api/posts/related/to/:postId')
+router.route('/posts/related/to/:postId')
   .get(postCtrl.listRelated)
     
-router.route("/api/best/posts/for/:matchId")
+router.route("/best/posts/for/:matchId")
   .get(postCtrl.listBestMatches)
 
 
-router.route('/api/latest/team/feed')
+router.route('/latest/team/feed')
   .get(
     authCtrl.requireSignin,
     postCtrl.latestTeam
   )
 
-router.route('/api/posts')
+router.route('/posts')
   .get(postCtrl.list)
 
 // --------------- LISTING FOR TEAM PAGE -------------------
 
 router
-  .route("/api/president/posts/by/:teamId")
+  .route("/president/posts/by/:teamId")
   .get(postCtrl.listForPresident);
 
-router.route("/api/vicePresident/posts/by/:teamId")
+router.route("/vicePresident/posts/by/:teamId")
   .get(postCtrl.listForVicePresident)
 
-router.route("/api/manager/posts/by/:teamId")
+router.route("/manager/posts/by/:teamId")
   .get(postCtrl.listForManager)
 
-router.route("/api/coach/posts/by/:teamId")
+router.route("/coach/posts/by/:teamId")
   .get(postCtrl.listForCoach)
 
-router.route("/api/scout/posts/by/:teamId")
+router.route("/scout/posts/by/:teamId")
   .get(postCtrl.listForScout)
 
-router.route("/api/youth/posts/by/:teamId")
+router.route("/youth/posts/by/:teamId")
   .get(postCtrl.listForYouth)
 
 
@@ -125,20 +125,20 @@ router.route("/api/youth/posts/by/:teamId")
 
 // ------------ LIKE SYSTEM -------------
 
-router.route("/api/liking/post").put(authCtrl.requireSignin, postCtrl.like);
+router.route("/liking/post").put(authCtrl.requireSignin, postCtrl.like);
 
-router.route("/api/unliking/post").put(authCtrl.requireSignin, postCtrl.unlike);
+router.route("/unliking/post").put(authCtrl.requireSignin, postCtrl.unlike);
 
 
 // ------------- PIN SYSTEM -------------
 
-router.route("/api/pin/post")
+router.route("/pin/post")
   .put(
     authCtrl.requireSignin,
     postCtrl.pin
   )
 
-router.route("/api/unpin/post")
+router.route("/unpin/post")
   .put(
     authCtrl.requireSignin,
     postCtrl.unpin
@@ -147,7 +147,7 @@ router.route("/api/unpin/post")
 
 // -------------- COMPLAIN MAIL ------------
 
-router.route("/api/complain/post")
+router.route("/complain/post")
   .post(
     postCtrl.complain
   )

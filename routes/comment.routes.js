@@ -15,7 +15,7 @@ const router = express.Router();
 // --------------- CRUD -------------
 
 router
-  .route("/api/comments/:postId")
+  .route("/comments/:postId")
   .post(authCtrl.requireSignin, commentCtrl.create)
   .get(authCtrl.requireSignin,commentCtrl.list);
 
@@ -24,15 +24,15 @@ router
 // Photo URL
 
 router
-  .route("/api/comments/imageOne/:commentId")
+  .route("/comments/imageOne/:commentId")
   .get(commentCtrl.imageOne);
 
 router
-  .route('/api/comments/by/:userId')
+  .route('/comments/by/:userId')
   .get(authCtrl.requireSignin,commentCtrl.listByUser)
 
 router
-  .route("/api/singlecomment/:commentId")
+  .route("/singlecomment/:commentId")
   .get( commentCtrl.read)
   .delete(authCtrl.requireSignin, commentCtrl.isCommenter, commentCtrl.remove);
 
@@ -41,26 +41,26 @@ router
 
 // ------- COMMENTS FOR ASIDE MENU ----------
 
-router.route("/api/comments/related/:commentId")
+router.route("/comments/related/:commentId")
   .get(authCtrl.requireSignin,commentCtrl.listRelated)
 
-router.route("/api/best/comments/:postId")
+router.route("/best/comments/:postId")
   .get(authCtrl.requireSignin,commentCtrl.bestCommentPosts)
 
-router.route("/api/bestcomments/:userId")
+router.route("/bestcomments/:userId")
   .get(authCtrl.requireSignin,commentCtrl.bestCommentUsers)
 
 
 
 // -------- LIKE SYSTEM ----------
 
-router.route("/api/comments/like")
+router.route("/comments/like")
   .put(
     authCtrl.requireSignin, 
     commentCtrl.like
   );
 
-router.route("/api/comments/unlike")
+router.route("/comments/unlike")
   .put(
     authCtrl.requireSignin, 
     commentCtrl.unlike

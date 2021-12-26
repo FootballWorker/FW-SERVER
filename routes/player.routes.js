@@ -11,18 +11,18 @@ const router = express.Router();
 // ------------------------- CRUD for POSITION ----------------------------------
 
 router
-  .route("/api/new/position")
+  .route("/new/position")
   .post(
     authCtrl.requireSignin,
     authCtrl.isAdmin,
     playerCtrl.createPosition
   );
 
-router.route("/api/positions")
+router.route("/positions")
   .get(playerCtrl.listPositions)
 
 router
-  .route("/api/position/:positionId")
+  .route("/position/:positionId")
   .get(authCtrl.requireSignin, authCtrl.isAdmin, playerCtrl.positionRead)
   .put(authCtrl.requireSignin, authCtrl.isAdmin, playerCtrl.positionUpdate)
   .delete(authCtrl.requireSignin, authCtrl.isAdmin, playerCtrl.positionRemove);
@@ -36,7 +36,7 @@ router
 // Create Player
 
 router
-  .route("/api/new/player/to/:teamId")
+  .route("/new/player/to/:teamId")
   .post(
     authCtrl.requireSignin, 
     authCtrl.isPresident,
@@ -46,23 +46,23 @@ router
 // Listing Players
 
 router
-  .route("/api/players/photo/:playerId")
+  .route("/players/photo/:playerId")
   .get(playerCtrl.photo);
 
 
-router.route("/api/players").get(authCtrl.requireSignin, playerCtrl.list);
+router.route("/players").get(authCtrl.requireSignin, playerCtrl.list);
 
-router.route('/api/players/by/:teamId')
+router.route('/players/by/:teamId')
   .get(
     playerCtrl.listByTeam
   )
 
-router.route("/api/playerstars")
+router.route("/playerstars")
   .get(playerCtrl.listByStar)
 
 // Search
 
-router.route("/api/search/players")
+router.route("/search/players")
   .get(playerCtrl.listForSearch)
 
 
@@ -70,7 +70,7 @@ router.route("/api/search/players")
 //  Read , Update and Delete Player APIs
 
 router
-.route("/api/players/:playerId")
+.route("/players/:playerId")
   .get(playerCtrl.incrementViews , playerCtrl.read)
   .put(authCtrl.requireSignin,playerCtrl.isPresident, playerCtrl.update)
   .delete(authCtrl.requireSignin, authCtrl.isAdmin, playerCtrl.remove);
@@ -80,9 +80,9 @@ router
 
 // Star Players APIs
 
-router.route("/api/starplayers").put(authCtrl.requireSignin, playerCtrl.star);
+router.route("/starplayers").put(authCtrl.requireSignin, playerCtrl.star);
 
-router.route("/api/unstarplayers").put(authCtrl.requireSignin, playerCtrl.unstar);
+router.route("/unstarplayers").put(authCtrl.requireSignin, playerCtrl.unstar);
 
 
 

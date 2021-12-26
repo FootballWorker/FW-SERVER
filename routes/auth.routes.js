@@ -5,14 +5,14 @@ import authCtrl from '../controllers/auth.controller.js'
 const router = express.Router()
 
 // Signin
-router.route('/api/auth/signin').post(authCtrl.signin)
+router.route('/auth/signin').post(authCtrl.signin)
 
 
 // Contact
-router.route('/api/contact/mail')
+router.route('/contact/mail')
   .post(authCtrl.contact)
 
-router.route("/api/presidentmail")
+router.route("/presidentmail")
   .post(
     authCtrl.presidentMail
   )
@@ -22,17 +22,17 @@ router.route("/api/presidentmail")
 
 // ------- FORGOT PASSWORD SYSTEM ----------
 
-router.route('/api/forgotpassword')
+router.route('/forgotpassword')
   .post(authCtrl.forgotPassword)
 
-router.route('/api/resetpassword/:resetToken')
+router.route('/resetpassword/:resetToken')
   .post(authCtrl.resetPassword)
 
 
 
 // Signout
 
-router.route('/api/auth/signout').get(authCtrl.signout)
+router.route('/auth/signout').get(authCtrl.signout)
 
 
 

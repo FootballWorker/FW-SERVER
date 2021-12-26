@@ -9,28 +9,28 @@ const router = express.Router();
 // ------------------------ Attribute Routes ----------------------------
 
 router
-  .route("/api/record/attribute/:playerId")
+  .route("/record/attribute/:playerId")
   .post(authCtrl.requireSignin, attributeCtrl.isTechnic, attributeCtrl.create);
 
 router
-  .route("/api/attributes/category/averages/:playerId")
+  .route("/attributes/category/averages/:playerId")
   .get(attributeCtrl.averageAttributes);
 
 router
-  .route("/api/attributes/by/:playerId")
+  .route("/attributes/by/:playerId")
   .get(authCtrl.requireSignin, authCtrl.isAdmin, attributeCtrl.list);
 
 router
-  .route("/api/assessments/user/:playerId")
+  .route("/assessments/user/:playerId")
   .get(authCtrl.requireSignin, attributeCtrl.listByUser);
 
 router
-  .route("/api/attributes/:attributeId")
+  .route("/attributes/:attributeId")
   .get(authCtrl.requireSignin, attributeCtrl.read)
   .delete(authCtrl.requireSignin, authCtrl.isAdmin, attributeCtrl.remove);
 
 router
-  .route("/api/attributes/rescore")
+  .route("/attributes/rescore")
   .put(authCtrl.requireSignin, attributeCtrl.isRecorded, attributeCtrl.update);
 
 router.param("attributeId", attributeCtrl.attributeByID);

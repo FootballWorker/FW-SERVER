@@ -12,22 +12,22 @@ const router = express.Router()
 
 // ------ User ------
 
-router.route("/api/total/likes/:userId")
+router.route("/total/likes/:userId")
   .get(statCtrl.totalLikeUser)
 
-router.route("/api/total/comment/likes/:userId")
+router.route("/total/comment/likes/:userId")
   .get(statCtrl.totalCommentLikes)
 
-router.route("/api/total/likes/:newsId")
+router.route("/total/likes/:newsId")
   .get(statCtrl.totalLikeNews)
 
-router.route("/api/total/followers/:newsId")
+router.route("/total/followers/:newsId")
   .get(statCtrl.totalFollowerSubscribe)
 
 
 // ------ Team -------
 
-router.route("/api/total/value/players/:teamId")
+router.route("/total/value/players/:teamId")
   .get(statCtrl.totalValue)
 
 

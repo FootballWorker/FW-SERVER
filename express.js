@@ -46,20 +46,20 @@ app.use(hpp())
 
 
 // mount routes
-app.use("/", userRoutes);
-app.use("/", authRoutes);
-app.use("/", departmentRoutes);
-app.use("/", jobRoutes);
-app.use("/", teamRoutes);
-app.use("/", playerRoutes);
-app.use("/", matchRoutes);
-app.use("/", newsRoutes);
-app.use("/", pollRoutes);
-app.use("/", attributeRoutes);
-app.use("/", postRoutes);
-app.use("/", commentRoutes);
-app.use("/", statRoutes);
-app.use("/", chatRoutes);
+app.use("/api/v1/", userRoutes);
+app.use("/api/v1/", authRoutes);
+app.use("/api/v1/", departmentRoutes);
+app.use("/api/v1/", jobRoutes);
+app.use("/api/v1/", teamRoutes);
+app.use("/api/v1/", playerRoutes);
+app.use("/api/v1/", matchRoutes);
+app.use("/api/v1/", newsRoutes);
+app.use("/api/v1/", pollRoutes);
+app.use("/api/v1/", attributeRoutes);
+app.use("/api/v1/", postRoutes);
+app.use("/api/v1/", commentRoutes);
+app.use("/api/v1/", statRoutes);
+app.use("/api/v1/", chatRoutes);
 
 app.use(function(req, res, next) {
   if (toobusy()) {

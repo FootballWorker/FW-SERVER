@@ -8,18 +8,18 @@ import userCtrl from './../controllers/user.controller.js'
 const router = express.Router()
 
 
-router.route("/api/news")
+router.route("/news")
   .get(authCtrl.requireSignin,newsCtrl.list)
   .post(authCtrl.requireSignin,authCtrl.isEditor,newsCtrl.create)
   
 
 // Photo
 router
-  .route("/api/news/photo/:newsId")
+  .route("/news/photo/:newsId")
   .get(newsCtrl.photo);
 
 
-router.route("/api/news/:newsId")
+router.route("/news/:newsId")
   .get(authCtrl.requireSignin, newsCtrl.incrementViews, newsCtrl.read)
   .put(authCtrl.requireSignin, newsCtrl.isEditor , newsCtrl.update)
   .delete(authCtrl.requireSignin,authCtrl.isAdmin ,newsCtrl.remove)
@@ -29,13 +29,13 @@ router.route("/api/news/:newsId")
 
 // Listing
 
-router.route("/api/news/by/:userId")
+router.route("/news/by/:userId")
   .get(
     authCtrl.requireSignin,
     newsCtrl.listByUser
   )
 
-router.route("/api/topnews")
+router.route("/topnews")
   .get(
     newsCtrl.listTop
   )
@@ -44,13 +44,13 @@ router.route("/api/topnews")
 
 // Application
 
-router.route("/api/apply/for/news")
+router.route("/apply/for/news")
   .put(
     authCtrl.requireSignin,
     newsCtrl.applyFor
   )
 
-router.route("/api/cancel/apply/news")
+router.route("/cancel/apply/news")
   .put(
     authCtrl.requireSignin,
     newsCtrl.cancelApply
@@ -62,14 +62,14 @@ router.route("/api/cancel/apply/news")
 
 // Hiring
 
-router.route("/api/hireEditor")
+router.route("/hireEditor")
   .put(
     authCtrl.requireSignin,
     newsCtrl.hireEditor,
     newsCtrl.appointEditor
   )
 
-router.route("/api/hireEmployee")
+router.route("/hireEmployee")
   .put(
     authCtrl.requireSignin,
     newsCtrl.isEditor ,
@@ -79,7 +79,7 @@ router.route("/api/hireEmployee")
 
 // Firing
 
-router.route("/api/fireEditor")
+router.route("/fireEditor")
   .put(
     authCtrl.requireSignin,
     newsCtrl.fireEditor,
@@ -87,7 +87,7 @@ router.route("/api/fireEditor")
 
   )
 
-router.route("/api/fireEmployee")
+router.route("/fireEmployee")
   .put(
     authCtrl.requireSignin,
     newsCtrl.fireEmployee,
@@ -99,14 +99,14 @@ router.route("/api/fireEmployee")
 
 // ------------------------- Subscribing ----------------------------
 
-router.route("/api/subscribe/news")
+router.route("/subscribe/news")
   .put(
     authCtrl.requireSignin,
     newsCtrl.subscribe
   )
 
 router
-  .route("/api/unsubscribe/news")
+  .route("/unsubscribe/news")
   .put(authCtrl.requireSignin, newsCtrl.unsubscribe);
 
 
